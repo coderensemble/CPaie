@@ -1,12 +1,9 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
 //eslint-disable-next-line
-import Swal from 'sweetalert2';
-import emailjs from '@emailjs/browser';
-
 import { css } from "styled-components/macro";
-
+import emailjs from '@emailjs/browser';
 import Header from "../headers/light.js";
 
 import { ReactComponent as SvgDecoratorBlob1 } from "../../images/svg-decorator-blob-1.svg";
@@ -48,26 +45,23 @@ const CustomersLogoStrip = styled.div`
   }
 `;
 
-const sendEmail = (e) => {
-  e.preventDefault();
-
-  emailjs.sendForm('service_dl9djrv', 'template_aybi97f', form.current, 'MD6rY0SPz1H_153O_')
-    .then((result) => {
-        console.log(result.text);
-    }, (error) => {
-        console.log(error.text);
-    });
-  Swal.fire({
-    position: 'center',
-    icon: 'success',
-    title: 'You have sent an email!',
-    showConfirmButton: false,
-    timer: 1500
-  })
-  e.target.reset()
-};
-
 export default ({ roundedHeaderButton }) => {
+  const form = useRef();
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm('service_dl9djrv', 'template_ovql93k', form.current, 'MD6rY0SPz1H_153O_')
+      .then(
+        () => {
+          console.log('SUCCESS!');
+        },
+        (error) => {
+          console.log('FAILED...', error.text);
+        },
+      );
+  };
   return (
     <>
       <Header roundedHeaderButton={roundedHeaderButton} />
@@ -84,8 +78,10 @@ export default ({ roundedHeaderButton }) => {
               processus et optimisez votre gestion grâce à notre partenariat dédié à votre réussite.
             </Paragraph>
             <Actions>
-              <input type="text" placeholder="Votre adresse e-mail" onSubmit={sendEmail} />
+              <form ref={form} onSubmit={sendEmail}>
+              <input type="email" name="user_email" placeholder="Votre adresse e-mail" />
               <button>C'est parti</button>
+              </form>
             </Actions>
             <CustomersLogoStrip>
               <p>Ils m'ont fait confiance</p>
