@@ -60,7 +60,8 @@ export default ({ roundedHeaderButton }) => {
         (error) => {
           console.log('FAILED...', error.text);
         },
-      );
+        );
+        alert('Merci, je vous contacte trés bientot!');
   };
   return (
     <>

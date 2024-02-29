@@ -59,16 +59,16 @@ export default ({
 
   const defaultSteps = [
     {
-      heading: "Register",
-      description: "Create an account with us using Google or Facebook."
+      heading: "Contact",
+      description: "Envoyer moi un email pour que je puisse prendre contact avec vous."
     },
     {
-      heading: "Download",
-      description: "Browse and Download the template that you like from the marketplace."
+      heading: "Devis",
+      description: "Construison le devis ensemble avant d'établir le contrat."
     },
     {
-      heading: "Run",
-      description: "Follow the instructions to setup and customize the template to your needs."
+      heading: "Collaboration",
+      description: "Une fois le contrat signé, nous commencons notre collaboration."
     }
   ];
 
