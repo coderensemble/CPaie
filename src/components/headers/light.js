@@ -72,10 +72,10 @@ export default ({ roundedHeaderButton = false, logoLink, links, className, colla
    */
   const defaultLinks = [
     <NavLinks key={1}>
-      <NavLink href="/">A propos</NavLink>
+      <NavLink href="/">Home</NavLink>
       {/* <NavLink href="/#">Missions</NavLink>
       <NavLink href="/#">Temoignages</NavLink> */}
-      <NavLink href="/components/innerPages/ContactUsPage">Contact Us</NavLink>
+      <NavLink href="/components/innerPages/ContactUsPage">Contact</NavLink>
       {/* <NavLink href="/#" tw="lg:ml-12!">
         Login
       </NavLink> */}

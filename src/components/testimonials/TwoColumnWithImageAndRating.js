@@ -75,7 +75,7 @@ export default ({
   imageShadow = false,
   subheading = "Testimonials",
   heading = "Our Clients Love Us.",
-  description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim veniam.",
+  description = "En tant que responsable paie expérimenté, je m'engage à entretenir une relation étroite avec mes clients, offrant un soutien personnalisé et une expertise approfondie pour répondre à leurs besoins en matière de gestion des salaires et de conformité réglementaire.",
   textOnLeft = false,
   testimonials = [
     {

@@ -9,9 +9,9 @@ import MainFeature2 from "components/features/TwoColWithTwoHorizontalFeaturesAnd
 import FeatureWithSteps from "components/features/TwoColWithSteps.js";
 // import Pricing from "components/pricing/ThreePlans.js";
 import Testimonial from "components/testimonials/TwoColumnWithImageAndRating.js";
-import FAQ from "components/faqs/SingleCol.js";
+// import FAQ from "components/faqs/SingleCol.js";
 // import GetStarted from "components/cta/GetStarted";
-// import Footer from "components/footers/FiveColumnWithBackground.js";
+import Footer from "components/footers/MiniCenteredFooter.js";
 import heroScreenshotImageSrc from "images/hero-screenshot-1.png";
 import macHeroScreenshotImageSrc from "images/hero-screenshot-2.png";
 import prototypeIllustrationImageSrc from "images/prototype-illustration.svg";
@@ -118,10 +118,10 @@ export default () => {
           {
             profileImageSrc:
               "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3.25&w=512&h=512&q=80",
-            heading: "VERTYCAL",
-            quote:"Responsable paie à temps partagé Carole est trés appréciée de ses équipes par sa disponibilité et sa capacité à les faire progresser. Elle est force de proposition et de conseils. Elle permet à Vertycal de réaliser des missions à forte valeur ajoutée (audits, mise en place du CSE...).",
-            customerName: "François Bernhard",
-            customerTitle: "Expert Comptable"
+            heading: "LE PACK",
+            quote:"Grâce à Carole, nous avons enfin trouvé la relation de proximité qui nous manquait avec notre précédent expert paie. Compétente, disponible et réactive, nous avons l'impression qu'elle fait partie intégrante de la société.",
+            customerName: "Sybille du Peloux",
+            customerTitle: "Co-gérante"
           },
           {
             profileImageSrc:
@@ -130,20 +130,20 @@ export default () => {
             quote:
             "Responsable paie à temps partagé Carole est trés appréciée de ses équipes par sa disponibilité et sa capacité à les faire progresser. Elle est force de proposition et de conseils. Elle permet à Vertycal de réaliser des missions à forte valeur ajoutée (audits, mise en place du CSE...).",
             customerName: "François Bernhard",
-            customerTitle: "Expert Comptable"
+            customerTitle: "Expert comptable"
           },
           {
             profileImageSrc:
-              "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=512&h=512&q=80",
-            heading: "VERTYCAL",
+              "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?q=80&w=1974&auto=format&fit=facearea&facepad=2.25&w=512&h=512&q=80",
+            heading: "LINAMAR",
             quote:
-            "Responsable paie à temps partagé Carole est trés appréciée de ses équipes par sa disponibilité et sa capacité à les faire progresser. Elle est force de proposition et de conseils. Elle permet à Vertycal de réaliser des missions à forte valeur ajoutée (audits, mise en place du CSE...).",
-            customerName: "François Bernhard",
-            customerTitle: "Expert Comptable"
+            "Carole m'a accompagnée durant mon intégration. Elle est réactive, disponible et a été un réel soutien grâce à son recul et son expérience sur des points paie complexes.",
+            customerName: "Morgane Saulnier",
+            customerTitle: "Responsable paie"
           },
         ]}
       />
-      <FAQ
+      {/* <FAQ
         subheading={<Subheading>FAQS</Subheading>}
         heading={
           <>
@@ -182,9 +182,9 @@ export default () => {
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
           }
         ]}
-      />
-      {/* <GetStarted/>
-      <Footer /> */}
+      /> */}
+      {/* <GetStarted/> */}
+      <Footer />
     </AnimationRevealPage>
   );
 }

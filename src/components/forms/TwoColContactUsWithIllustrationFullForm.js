@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useRef } from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
+import emailjs from '@emailjs/browser';
 import { SectionHeading, Subheading as SubheadingBase } from "components/misc/Headings.js";
 import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
 import EmailIllustrationSrc from "images/email-illustration.svg";
@@ -34,16 +35,32 @@ const Textarea = styled(Input).attrs({as: "textarea"})`
 const SubmitButton = tw(PrimaryButtonBase)`inline-block mt-8`
 
 export default ({
-  subheading = "Contact Us",
-  heading = <>Feel free to <span tw="text-primary-500">get in touch</span><wbr/> with us.</>,
-  description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  subheading = "Contact",
+  heading = <>Expliquez moi<span tw="text-primary-500"> Votre Situation</span><wbr/></>,
+  description = "Vous avez un projet en tête ? Obtenez dès maintenant un devis personnalisé en quelques clics. Remplissez simplement mon formulaire en ligne en indiquant vos besoins spécifiques, et je vous fournis rapidement une estimation détaillée adaptée à votre projet.",
   submitButtonText = "Send",
   formAction = "#",
   formMethod = "get",
   textOnLeft = true,
 }) => {
   // The textOnLeft boolean prop can be used to display either the text on left or right side of the image.
+  const form = useRef();
 
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm('service_dl9djrv', 'template_ovql93k', form.current, 'MD6rY0SPz1H_153O_')
+      .then(
+        () => {
+          console.log('SUCCESS!');
+        },
+        (error) => {
+          console.log('FAILED...', error.text);
+        },
+        );
+        alert('Merci, je vous contacte trés bientot!');
+  };
   return (
     <Container>
       <TwoColumn>
@@ -55,11 +72,14 @@ export default ({
             {subheading && <Subheading>{subheading}</Subheading>}
             <Heading>{heading}</Heading>
             {description && <Description>{description}</Description>}
-            <Form action={formAction} method={formMethod}>
-              <Input type="email" name="email" placeholder="Your Email Address" />
-              <Input type="text" name="name" placeholder="Full Name" />
-              <Input type="text" name="subject" placeholder="Subject" />
-              <Textarea name="message" placeholder="Your Message Here" />
+            <Form action={formAction} method={formMethod} ref={form} onSubmit={sendEmail}>
+              <Input type="text" name="name" placeholder="Nom de société"/>
+              <Input type="email" name="user_email" placeholder="E-mail" required/>
+              <Input type="text" name="telephone" placeholder="Téléphone" />
+              <Input type="text" name="ccn" placeholder="CCN" />
+              <Input type="text" name="nbr_salaries" placeholder="Nombre de salariés"/>
+              <Input type="text" name="duree_mission" placeholder="Durée de la mission" />
+              <Textarea name="message" placeholder="La mission demandé en quelques mots" />
               <SubmitButton type="submit">{submitButtonText}</SubmitButton>
             </Form>
           </TextContent>
