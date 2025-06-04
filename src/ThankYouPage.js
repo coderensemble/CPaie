@@ -6,11 +6,9 @@ import tw from "twin.macro";
 import { css } from "styled-components/macro"; 
 import GitHubButton from "react-github-btn";
 
-import { LogoLink } from "components/headers/light.js";
 import { SectionHeading as HeadingBase } from "components/misc/Headings";
 import { SectionDescription as DescriptionBase } from "components/misc/Typography";
 
-import logo from "images/logo.svg";
 
 /* Hero */
 const Row = tw.div`flex`;
@@ -32,23 +30,12 @@ export default () => {
   window.gtag("js", new Date());
   window.gtag("config", "UA-45799926-9");
 
-  const downloadUrl = "/treact-ui.zip"
-  React.useEffect(() => {
-    var iframe = document.createElement("iframe");
-    iframe.style.display = "none";
-    iframe.src = downloadUrl
-    document.body.appendChild(iframe);
-  }, [])
-
   return (
     <AnimationRevealPage disabled>
       <Container tw="-mx-8 -mt-8 pt-8 px-8">
         <Content2Xl>
           <NavRow>
-            <LogoLink href="/">
-              <img src={logo} alt="" />
-              Treact
-            </LogoLink>
+          
             <div tw="flex flex-col lg:flex-row items-center">
               <NavLink target="_blank" href="https://owaiskhan.me/post/free-tailwindcss-react-ui-kit">
                 License & Usage
@@ -66,7 +53,7 @@ export default () => {
           </NavRow>
           <HeroRow>
             <Heading>Thank You!</Heading>
-            <Description tw="mt-12">Your Download Will Begin Shortly. If it does not, <NavLink href={downloadUrl} download>click this link</NavLink>.</Description>
+            <Description tw="mt-12">Your Download Will Begin Shortly. If it does not, .</Description>
             <div tw="mt-12 text-center">
               I am working on another library similar to Treact, with <span tw="font-bold">more components</span> and a much <span tw="font-bold">better developer
               experience</span>.

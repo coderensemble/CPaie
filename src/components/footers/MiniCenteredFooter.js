@@ -28,7 +28,6 @@ const SocialLink = styled.a`
   }
 `;
 
-const CopyrightText = tw.p`text-center mt-4 font-medium tracking-wide text-sm text-gray-600`
 export default () => {
   return (
     <Container>
@@ -56,9 +55,6 @@ export default () => {
               <YoutubeIcon />
             </SocialLink> */}
           </SocialLinksContainer>
-          <CopyrightText>
-            &copy; Copyright 2024, Adrien Neyron All Rights Reserved.
-          </CopyrightText>
         </Row>
       </Content>
     </Container>
