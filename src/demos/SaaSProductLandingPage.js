@@ -13,7 +13,7 @@ import Testimonial from "components/testimonials/TwoColumnWithImageAndRating.js"
 // import GetStarted from "components/cta/GetStarted";
 import Footer from "components/footers/MiniCenteredFooter.js";
 import heroScreenshotImageSrc from "images/carole.jpeg";
-import macHeroScreenshotImageSrc from "images/steps.jpeg";
+import macHeroScreenshotImageSrc from "images/rodion-kutsaiev-TMa_5BLvDqQ-unsplash.jpeg";
 import prototypeIllustrationImageSrc from "images/prototype-illustration.svg";
 import { ReactComponent as BriefcaseIcon } from "feather-icons/dist/icons/briefcase.svg";
 import { ReactComponent as MoneyIcon } from "feather-icons/dist/icons/dollar-sign.svg";
