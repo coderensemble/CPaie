@@ -1,4 +1,5 @@
 📝 Documentation Technique – C+Paie (Site Vitrine)
+
 📦 Présentation
 Ce dépôt contient le code source du site vitrine de C+Paie, développé avec React 18, Tailwind CSS, et Styled-components, dans un style moderne, animé et responsive.
 
