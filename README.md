@@ -1,68 +1,83 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+📝 Documentation Technique – C+Paie (Site Vitrine)
+📦 Présentation
+Ce dépôt contient le code source du site vitrine de C+Paie, développé avec React 18, Tailwind CSS, et Styled-components, dans un style moderne, animé et responsive.
 
-## Available Script
+📁 Structure de base
+React App (CRA) : Projet initialisé avec Create React App.
 
-In the project directory, you can run:
+Build Tool : react-scripts (WebPack intégré).
 
-### `yarn start`
+Déploiement : Netlify (yarn deploy).
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+🔧 Scripts disponibles
+Commandes à exécuter via yarn ou npm run :
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+Script	Description
+start	Lance l’environnement de développement local (localhost:3000).
+build	Compile le projet en production dans le dossier build/.
+test	Lance la suite de tests avec Jest et Testing Library.
+eject	Permet de personnaliser la configuration Webpack (action irréversible).
+deploy	Build + déploiement Netlify en production (--dir=build).
 
-### `yarn test`
+🧩 Dépendances principales
+Package	Description
+React 18	Bibliothèque JavaScript pour construire l’interface utilisateur.
+React DOM	Rendu des composants React dans le DOM.
+React Router DOM v6	Routing côté client moderne.
+Styled-components	CSS-in-JS pour styliser les composants React.
+Tailwind CSS v3	Framework CSS utilitaire.
+twin.macro	Permet d’utiliser Tailwind dans styled-components.
+Framer Motion	Animation fluide pour React.
+react-slick + slick-carousel	Slider/carrousel responsive.
+react-modal	Boîte de dialogue modale accessible.
+react-rnd	Composant pour déplacer/redimensionner des éléments.
+react-anchor-link-smooth-scroll	Scroll fluide vers les sections.
+feather-icons	Icônes SVG légères et élégantes.
+@emailjs/browser	Envoi d’email depuis le front sans backend.
+react-github-btn	Boutons GitHub intégrés (stars, follow, fork...).
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+🧪 Dépendances de test
+Package	Description
+@testing-library/react	Tests d’interaction React (DOM rendering).
+@testing-library/jest-dom	Matchers spécifiques pour les assertions DOM.
+@testing-library/user-event	Simulation d’interactions utilisateur.
 
-### `yarn build`
+🛠️ Dépendance de développement
+Package	Utilisation
+@babel/plugin-proposal-private-property-in-object	Support syntaxique avancé pour Babel
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+🔍 Linting & Compatibilité
+ESLint
+Basé sur la configuration de Create React App
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+Désactive la règle import/no-anonymous-default-export dans tous les fichiers src/**/*.js
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Compatibilité navigateurs
+Environnement	Cible navigateur
+Production	> 0.2%, pas de navigateurs obsolètes, sauf Opera Mini
+Dev	Dernière version de Chrome, Firefox et Safari
 
-### `yarn eject`
+🚀 Déploiement
+Le projet est conçu pour un déploiement rapide via Netlify :
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+bash
+Copier
+Modifier
+yarn build && netlify deploy --prod --dir=build
+Nécessite le CLI Netlify.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Le répertoire build contient les fichiers de production.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+✅ Pré-requis techniques
+Node.js ≥ 14
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Yarn ou npm
 
-## Learn More
+Accès à une instance de Netlify pour déploiement (optionnel)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+🔮 Recommandations
+Ajouter un fichier .env pour sécuriser les clés (ex: EMAILJS_PUBLIC_KEY)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Utiliser un linter et prettier pour la cohérence du code
 
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Mettre à jour les dépendances régulièrement (attention à React 18 / Router 6)
