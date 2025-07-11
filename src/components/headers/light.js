@@ -59,7 +59,7 @@ export default ({ logoLink, links, className, collapseBreakpointClass = "lg" }) 
       <StyledHashLink smooth to="/#about" onClick={toggleNavbar}>Expertise</StyledHashLink>
       <StyledHashLink smooth to="/#steps" onClick={toggleNavbar}>Process</StyledHashLink>
       <StyledHashLink smooth to="/#returns" onClick={toggleNavbar}>Témoignages</StyledHashLink>
-      <StyledHashLink smooth to="/components/innerPages/ContactUsPage" onClick={toggleNavbar}>Contact</StyledHashLink>
+      <StyledHashLink smooth to="/contact" onClick={toggleNavbar}>Contact</StyledHashLink>
     </NavLinks>,
   ];
 

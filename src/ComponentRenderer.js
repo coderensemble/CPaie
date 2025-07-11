@@ -3,12 +3,6 @@ import { useParams } from "react-router-dom";
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import SaaSProductLandingPage from "landingPage/SaaSProductLandingPage.js";
 import SaaSProductLandingPageImageSrc from "images/demo/SaaSProductLandingPage.jpeg";
-import ContactUsPage from "pages/ContactUs.js";
-import TermsOfServicePage from "pages/RGPDPolicy.js";
-import PrivacyPolicyPage from "pages/LegalNotices.js";
-import ContactUsPageImageSrc from "images/demo/ContactUsPage.jpeg";
-import TermsOfServicePageImageSrc from "images/demo/TermsOfServicePage.jpeg";
-import PrivacyPolicyPageImageSrc from "images/demo/PrivacyPolicyPage.jpeg";
 
 import IllustrationAndInputHero from "components/hero/TwoColumnWithInput.js";
 
@@ -27,25 +21,6 @@ export const components = {
       component: SaaSProductLandingPage,
       imageSrc: SaaSProductLandingPageImageSrc,
       url: "/components/landingPages/SaaSProductLandingPage",
-    },
-  },
-
-  innerPages: {
-    ContactUsPage: {
-      component: ContactUsPage,
-      url: `/components/innerPages/ContactUsPage`,
-      imageSrc: ContactUsPageImageSrc,
-    },
-
-    TermsOfServicePage: {
-      component: TermsOfServicePage,
-      url: `/components/innerPages/TermsOfServicePage`,
-      imageSrc: TermsOfServicePageImageSrc,
-    },
-    PrivacyPolicyPage: {
-      component: PrivacyPolicyPage,
-      url: `/src/pages/LegalNotices.js`,
-      imageSrc: PrivacyPolicyPageImageSrc,
     },
   },
 

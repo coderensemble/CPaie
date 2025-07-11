@@ -8,7 +8,7 @@ import Footer from "components/footers/MiniCenteredFooter.js";
 const Heading = tw.h2`text-4xl font-black text-gray-900`;
 const SectionWrapper = tw(motion.div)`px-4 `;
 
-export default function ContactUsPage() {
+const ContactUsPage = () =>{
   return (
     <>
       <Header /> 
@@ -32,3 +32,5 @@ export default function ContactUsPage() {
     </>
   );
 }
+
+export default ContactUsPage

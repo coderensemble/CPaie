@@ -1,5 +1,4 @@
 import React from "react";
-import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import { Container, ContentWithPaddingXl } from "components/misc/Layouts";
 import tw from "twin.macro";
 import styled from "styled-components";
@@ -33,9 +32,9 @@ const Text = styled.div`
     }
   }
 `;
-export default ({ headingText = "Privacy Policy" }) => {
+const LegalNotices = ({ headingText = "Mentions Légales" }) => {
   return (
-    <AnimationRevealPage>
+    <>
       <Header />
       <Container>
         <ContentWithPaddingXl>
@@ -105,6 +104,8 @@ export default ({ headingText = "Privacy Policy" }) => {
           </Text>
         </ContentWithPaddingXl>
       </Container>
-    </AnimationRevealPage>
+    </>
   );
 };
+
+export default LegalNotices;

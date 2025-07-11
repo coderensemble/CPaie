@@ -1,14 +1,13 @@
 import React from "react";
 import tw from "twin.macro";
 import { motion } from "framer-motion";
-import ContactUsForm from "components/forms/TwoColContactUsWithIllustrationFullForm.js";
 import Footer from "components/footers/MiniCenteredFooter.js";
 
 
 const Heading = tw.h2`text-4xl font-black text-gray-900`;
 const SectionWrapper = tw(motion.div)`px-4 py-12`;
 
-export default function ContactUsPage() {
+export default function AnimationRevealPage() {
   return (
     <>
       <SectionWrapper
@@ -23,7 +22,6 @@ export default function ContactUsPage() {
             <Heading>
             </Heading>
           </div>
-          <ContactUsForm />
         </div>
       </SectionWrapper>
 

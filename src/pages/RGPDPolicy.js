@@ -1,5 +1,4 @@
 import React from "react";
-import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import { Container, ContentWithPaddingXl } from "components/misc/Layouts";
 import tw from "twin.macro";
 import styled from "styled-components";
@@ -34,9 +33,9 @@ const Text = styled.div`
   }
 `;
 
-export default ({ headingText = "Politique de confidentialité (RGPD)" }) => {
+const PrivacyPolicyPage = ({ headingText = "Politique de confidentialité (RGPD)" }) => {
   return (
-    <AnimationRevealPage>
+    <>
       <Header />
       <Container>
         <ContentWithPaddingXl>
@@ -61,7 +60,7 @@ export default ({ headingText = "Politique de confidentialité (RGPD)" }) => {
               <br />
               <strong>SIRET :</strong> [à compléter]
               <br />
-              <strong>Adresse :</strong> [à compléter]
+              <strong>Adresse :</strong> 1435 Route de la barliette 74300 Araches la Frasse
             </p>
 
             <h2>Finalités du traitement</h2>
@@ -159,7 +158,7 @@ export default ({ headingText = "Politique de confidentialité (RGPD)" }) => {
             </p>
             <ul>
               <li>Par email : carol.forestier@gmail.com</li>
-              <li>Par courrier : [Adresse complète]</li>
+              <li>Par courrier : 1435 Route de la barliette 74300 Araches la Frasse</li>
             </ul>
             <p>
               Vous pouvez également introduire une réclamation auprès de la CNIL :{" "}
@@ -170,6 +169,8 @@ export default ({ headingText = "Politique de confidentialité (RGPD)" }) => {
           </Text>
         </ContentWithPaddingXl>
       </Container>
-    </AnimationRevealPage>
+    </>
   );
 };
+
+export default PrivacyPolicyPage;
