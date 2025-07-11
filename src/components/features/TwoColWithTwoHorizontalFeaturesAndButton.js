@@ -3,14 +3,13 @@ import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import { SectionHeading, Subheading as SubheadingBase } from "components/misc/Headings.js";
-// import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
-import TeamIllustrationSrc from "images/team-illustration-2.svg";
+import TeamIllustrationSrc from "images/team-illustration.svg";
 import { ReactComponent as SvgDotPattern } from "images/dot-pattern.svg";
 import { ReactComponent as BriefcaseIcon } from "feather-icons/dist/icons/briefcase.svg";
 import { ReactComponent as MoneyIcon } from "feather-icons/dist/icons/dollar-sign.svg";
 
 const Container = tw.div`relative`;
-const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-auto py-20 md:py-24 items-center`;
+const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-4 md:mx-auto py-20 md:py-24 items-center`;
 const Column = tw.div`w-full max-w-md mx-auto md:max-w-none md:mx-0`;
 const ImageColumn = tw(Column)`md:w-6/12 flex-shrink-0 relative`;
 const TextColumn = styled(Column)(props => [
@@ -54,12 +53,8 @@ const FeatureHeading = tw.div`ml-3 font-bold text-xl`;
 
 const FeatureDescription = tw.div`mt-4 text-center md:text-left text-gray-600 leading-relaxed`;
 
-// const PrimaryButton = styled(PrimaryButtonBase)(props => [
-//   tw`mt-12 text-sm inline-block mx-auto md:mx-0`,
-//   props.buttonRounded && tw`rounded-full`
-// ]);
-
 export default ({
+  id,
   subheading = "Our Expertise",
   heading = (
     <>
@@ -105,7 +100,7 @@ export default ({
   if (!features) features = defaultFeatures;
 
   return (
-    <Container>
+    <Container id={id}>
       <TwoColumn>
         <ImageColumn>
           <Image src={imageSrc} imageBorder={imageBorder} imageShadow={imageShadow} imageRounded={imageRounded} />
@@ -133,10 +128,6 @@ export default ({
                 </Feature>
               ))}
             </Features>
-
-            {/* <PrimaryButton buttonRounded={buttonRounded} as="a" href={primaryButtonUrl}>
-              {primaryButtonText}
-            </PrimaryButton> */}
           </TextContent>
         </TextColumn>
       </TwoColumn>

@@ -1,58 +1,33 @@
 import React from "react";
 import tw from "twin.macro";
-
-/* framer-motion and useInView here are used to animate the sections in when we reach them in the viewport
- */
 import { motion } from "framer-motion";
-import useInView from "helpers/useInView";
+import ContactUsForm from "components/forms/TwoColContactUsWithIllustrationFullForm.js";
+import Footer from "components/footers/MiniCenteredFooter.js";
 
-const StyledDiv = tw.div`font-display min-h-screen text-secondary-500 p-8 overflow-hidden`;
-function AnimationReveal({ disabled, children }) {
-  if (disabled) {
-    return <>{children}</>;
-  }
 
-  if (!Array.isArray(children)) children = [children];
+const Heading = tw.h2`text-4xl font-black text-gray-900`;
+const SectionWrapper = tw(motion.div)`px-4 py-12`;
 
-  const directions = ["left", "right"];
-  const childrenWithAnimation = children.map((child, i) => {
-    return (
-      <AnimatedSlideInComponent key={i} direction={directions[i % directions.length]}>
-        {child}
-      </AnimatedSlideInComponent>
-    );
-  });
-  return <>{childrenWithAnimation}</>;
-}
-
-function AnimatedSlideInComponent({ direction = "left", offset = 30, children }) {
-  const [ref, inView] = useInView({ margin: `-${offset}px 0px 0px 0px`});
-
-  const x = { target: "0%" };
-
-  if (direction === "left") x.initial = "-150%";
-  else x.initial = "150%";
-
+export default function ContactUsPage() {
   return (
-    <div ref={ref}>
-      <motion.section
-        initial={{ x: x.initial }}
-        animate={{ 
-          x: inView && x.target,
-          transitionEnd:{
-            x: inView && 0
-          }
-        }}
-        transition={{ type: "spring", damping: 19 }}
+    <>
+      <SectionWrapper
+        id="contact"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
       >
-        {children}
-      </motion.section>
-    </div>
+        <div tw="max-w-screen-xl mx-auto">
+          <div tw="text-center mb-12">
+            <Heading>
+            </Heading>
+          </div>
+          <ContactUsForm />
+        </div>
+      </SectionWrapper>
+
+      <Footer />
+    </>
   );
 }
-
-export default props => (
-  <StyledDiv className="App">
-    <AnimationReveal {...props} />
-  </StyledDiv>
-);

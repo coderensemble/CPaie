@@ -1,32 +1,29 @@
 import React from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
-//eslint-disable-next-line
+// eslint-disable-next-line
 import { css } from "styled-components/macro";
 import { SectionHeading, Subheading as SubheadingBase } from "components/misc/Headings.js";
 import { SectionDescription } from "components/misc/Typography.js";
 
-import defaultCardImage from "images/shield-icon.svg";
-
-import { ReactComponent as SvgDecoratorBlob3 } from "images/svg-decorator-blob-3.svg";
-
-import SupportIconImage from "images/support-icon.svg";
-import ShieldIconImage from "images/shield-icon.svg";
-import CustomizeIconImage from "images/customize-icon.svg";
-import FastIconImage from "images/fast-icon.svg";
-import ReliableIconImage from "images/reliable-icon.svg";
-import SimpleIconImage from "images/simple-icon.svg";
+// Import des SVG comme composants React
+import { ReactComponent as ShieldIcon } from "images/shield-icon.svg";
+import { ReactComponent as SupportIcon } from "images/support-icon.svg";
+import { ReactComponent as CustomizeIcon } from "images/customize-icon.svg";
+import { ReactComponent as FastIcon } from "images/fast-icon.svg";
+import { ReactComponent as ReliableIcon } from "images/reliable-icon.svg";
+import { ReactComponent as SimpleIcon } from "images/simple-icon.svg";
 
 const Container = tw.div`relative`;
 
 const ThreeColumnContainer = styled.div`
-  ${tw`flex flex-col items-center md:items-stretch md:flex-row flex-wrap md:justify-center max-w-screen-lg mx-auto py-20 md:py-24`}
+  ${tw`flex flex-col items-center md:items-stretch md:flex-row flex-wrap md:justify-center max-w-screen-lg mx-4 md:mx-auto py-4`}
 `;
 const Subheading = tw(SubheadingBase)`mb-4`;
 const Heading = tw(SectionHeading)`w-full`;
 const Description = tw(SectionDescription)`w-full text-center`;
 
-const VerticalSpacer = tw.div`mt-10 w-full`
+const VerticalSpacer = tw.div`mt-10 w-full`;
 
 const Column = styled.div`
   ${tw`md:w-1/2 lg:w-1/3 max-w-sm`}
@@ -34,10 +31,11 @@ const Column = styled.div`
 
 const Card = styled.div`
   ${tw`flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left h-full mx-4 px-2 py-8`}
+
   .imageContainer {
     ${tw`border text-center rounded-full p-5 flex-shrink-0`}
-    img {
-      ${tw`w-6 h-6`}
+    svg {
+      ${tw`w-6 h-6 text-primary-500`} /* couleur par défaut */
     }
   }
 
@@ -50,48 +48,54 @@ const Card = styled.div`
   }
 
   .description {
-    ${tw`mt-1 sm:mt-4 font-medium text-secondary-100 leading-loose`}
+    ${tw`mt-1 sm:mt-4 font-medium text-black leading-loose`}
   }
 `;
 
-const DecoratorBlob = styled(SvgDecoratorBlob3)`
-  ${tw`pointer-events-none absolute right-0 bottom-0 w-64 opacity-25 transform translate-x-32 translate-y-48 `}
-`;
-
-export default ({ cards = null, heading = "Amazing Features", subheading = "Features", description = "Entrepreneur en gestion de paie, je vous propose des solutions personnalisées pour simplifier vos processus, assurer la conformité réglementaire et optimiser votre gestion sociale." }) => {
-  /*
-   * This componets has an array of object denoting the cards defined below. Each object in the cards array can have the key (Change it according to your need, you can also add more objects to have more cards in this feature component) or you can directly pass this using the cards prop:
-   *  1) imageSrc - the image shown at the top of the card
-   *  2) title - the title of the card
-   *  3) description - the description of the card
-   *  If a key for a particular card is not provided, a default value is used
-   */
-
+export default ({
+  id,
+  cards = null,
+  heading = "Amazing Features",
+  subheading = "Features",
+  description = "Entrepreneur en gestion de paie, je vous propose des solutions personnalisées pour simplifier vos processus, assurer la conformité réglementaire et optimiser votre gestion sociale."
+}) => {
   const defaultCards = [
     {
-      imageSrc: ShieldIconImage,
+      Icon: ShieldIcon,
       title: "Externalisation Paie & Social",
       description: "Services d'externalisation complets pour soulager les entreprises de la charge administrative liée à la paie et aux aspects sociaux."
     },
-    { imageSrc: SupportIconImage, 
+    {
+      Icon: SupportIcon,
       title: "Remplacement Sur Mesure",
-      description: "un service de remplacement sur mesure pour les entreprises ayant besoin d'une assistance temporaire ou ponctuelle dans leur service de paie."
+      description: "Un service de remplacement sur mesure pour les entreprises ayant besoin d'une assistance temporaire ou ponctuelle dans leur service de paie."
     },
-    { imageSrc: CustomizeIconImage, title: "Accompagnement De Projet",
-  description: "Offrir un soutien expert et personnalisé tout au long du processus de gestion de paie, en guidant les clients à travers les différentes étapes et en garantissant une implémentation réussie des projets."
-  },
-    { imageSrc: ReliableIconImage, title: "Maîtrise des Outils et Technologies",
-  description: "Utiliser une expertise approfondie des logiciels de gestion de paie et des technologies connexes pour optimiser les processus et assurer une gestion efficace et précise de la paie." },
-    { imageSrc: FastIconImage, title: "Veille Réglementaire et Conformité ",
-  description: "Assurer une surveillance constante des évolutions légales et réglementaires dans le domaine de la paie, en garantissant que les pratiques restent toujours conformes aux exigences légales en vigueur." },
-    { imageSrc: SimpleIconImage, title: "Service Client et Relationnel",
-  description: "Fournir un service client en établissant des relations de confiance avec les clients, en comprenant leurs besoins spécifiques et en offrant des solutions adaptées." }
+    {
+      Icon: CustomizeIcon,
+      title: "Accompagnement De Projet",
+      description: "Offrir un soutien expert et personnalisé tout au long du processus de gestion de paie, en guidant les clients à travers les différentes étapes et en garantissant une implémentation réussie des projets."
+    },
+    {
+      Icon: ReliableIcon,
+      title: "Maîtrise des Outils et Technologies",
+      description: "Utiliser une expertise approfondie des logiciels de gestion de paie et des technologies connexes pour optimiser les processus et assurer une gestion efficace et précise de la paie."
+    },
+    {
+      Icon: FastIcon,
+      title: "Veille Réglementaire et Conformité",
+      description: "Assurer une surveillance constante des évolutions légales et réglementaires dans le domaine de la paie, en garantissant que les pratiques restent toujours conformes aux exigences légales en vigueur."
+    },
+    {
+      Icon: SimpleIcon,
+      title: "Service Client et Relationnel",
+      description: "Fournir un service client en établissant des relations de confiance avec les clients, en comprenant leurs besoins spécifiques et en offrant des solutions adaptées."
+    }
   ];
 
   if (!cards) cards = defaultCards;
 
   return (
-    <Container>
+    <Container href={id}>
       <ThreeColumnContainer>
         {subheading && <Subheading>{subheading}</Subheading>}
         <Heading>{heading}</Heading>
@@ -101,19 +105,16 @@ export default ({ cards = null, heading = "Amazing Features", subheading = "Feat
           <Column key={i}>
             <Card>
               <span className="imageContainer">
-                <img src={card.imageSrc || defaultCardImage} alt="" />
+                <card.Icon className="w-6 h-6 text-red-500" style={{ color: 'rgba(239, 68, 68, 1)' }}/>
               </span>
               <span className="textContainer">
-                <span className="title">{card.title || "Fully Secure"}</span>
-                <p className="description">
-                  {card.description || "Lorem ipsum donor amet siti ceali ut enim ad minim veniam, quis nostrud."}
-                </p>
+                <span className="title">{card.title}</span>
+                <p className="description">{card.description}</p>
               </span>
             </Card>
           </Column>
         ))}
       </ThreeColumnContainer>
-      <DecoratorBlob />
     </Container>
   );
 };

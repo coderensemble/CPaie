@@ -6,23 +6,17 @@ import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import { SectionHeading, Subheading as SubheadingBase } from "components/misc/Headings.js";
 import { Container, ContentWithPaddingXl } from "components/misc/Layouts.js";
-import loveIllustrationImageSrc from "images/collaboration.jpeg";
+import { ReactComponent as LoveIllustrationImageSrc } from "images/professional-illustration.svg";
 import { ReactComponent as StarIconBase } from "images/star-icon.svg";
 import { ReactComponent as ArrowLeftIcon } from "images/arrow-left-3-icon.svg";
 import { ReactComponent as ArrowRightIcon } from "images/arrow-right-3-icon.svg";
 
-const Row = tw.div`flex flex-col md:flex-row justify-between items-center`;
-const Column = tw.div`w-full max-w-md mx-auto md:max-w-none md:mx-0`;
-const ImageColumn = tw(Column)`md:w-5/12 xl:w-6/12 flex-shrink-0 relative`;
+const Row = tw.div`flex flex-col md:flex-row justify-between items-center mx-4 md:mx-auto`;
+const Column = tw.div`w-full max-w-md mx-4 md:mx-auto md:max-w-none md:mx-0`;
+const ImageColumn = tw(Column)`md:w-5/12 xl:w-6/12 flex-shrink-0 relative flex justify-center items-center`;
 const TextColumn = styled(Column)(props => [
   tw`md:w-7/12 xl:w-6/12 mt-16 md:mt-0`,
   props.textOnLeft ? tw`md:pr-12 lg:pr-16 md:order-first` : tw`md:pl-12 lg:pl-16 md:order-last`
-]);
-
-const Image = styled.img(props => [
-  props.imageRounded && tw`rounded`,
-  props.imageBorder && tw`border`,
-  props.imageShadow && tw`shadow`
 ]);
 
 const Subheading = tw(SubheadingBase)`text-center md:text-left`;
@@ -69,45 +63,23 @@ const ControlButton = styled.button`
 `;
 
 export default ({
-  imageSrc = loveIllustrationImageSrc,
-  imageRounded = true,
-  imageBorder = false,
-  imageShadow = false,
+  id,
   subheading = "Testimonials",
-  heading = "Our Clients Love Us.",
+  heading = "",
   description = "En tant que responsable paie expérimenté, je m'engage à entretenir une relation étroite avec mes clients, offrant un soutien personnalisé et une expertise approfondie pour répondre à leurs besoins en matière de gestion des salaires et de conformité réglementaire.",
   textOnLeft = false,
   testimonials = [
-    {
-      stars: 5,
-      profileImageSrc:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3.25&w=512&h=512&q=80",
-      heading: "Amazing User Experience",
-      quote:
-        "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.",
-      customerName: "Charlotte Hale",
-      customerTitle: "CEO, Delos Inc."
-    },
-    {
-      stars: 5,
-      profileImageSrc:
-        "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=512&h=512&q=80",
-      heading: "Love the Developer Experience and Design Principles !",
-      quote:
-        "Sinor Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.",
-      customerName: "Adam Cuppy",
-      customerTitle: "Founder, EventsNYC"
-    }
   ]
 }) => {
   const [sliderRef, setSliderRef] = useState(null);
 
   return (
     <Container>
+      <div id={id}>
       <ContentWithPaddingXl>
         <Row>
           <ImageColumn>
-            <Image src={imageSrc} imageBorder={imageBorder} imageShadow={imageShadow} imageRounded={imageRounded} />
+            <LoveIllustrationImageSrc style={{ height: "30rem", color: 'rgba(239, 68, 68, 1)' }} />
           </ImageColumn>
           <TextColumn textOnLeft={textOnLeft}>
             <Subheading>{subheading}</Subheading>
@@ -147,6 +119,7 @@ export default ({
           </TextColumn>
         </Row>
       </ContentWithPaddingXl>
+      </div>
     </Container>
   );
 };
