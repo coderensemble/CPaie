@@ -8,7 +8,7 @@ import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
 import { ReactComponent as EmailIllustrationSrc} from "images/email-illustration.svg";
 
 
-const Container = tw.div`relative`;
+const Container = tw.div`relative min-h-screen pt-20`;
 const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-auto`;
 const Column = tw.div`w-full max-w-md mx-auto md:max-w-none md:mx-0`;
 const ImageColumn = tw(Column)`md:w-5/12 flex-shrink-0 flex justify-center items-center`;

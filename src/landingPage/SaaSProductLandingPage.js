@@ -21,7 +21,7 @@ export default () => {
 
   return (
     <>
-      <Hero roundedHeaderButton={true} />
+      <Hero id="home" roundedHeaderButton={true} />
 
       <motion.div
         id="missions"

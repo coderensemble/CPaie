@@ -10,8 +10,8 @@ import { ReactComponent as SvgDecoratorBlob1 } from "../../images/svg-decorator-
 import { ReactComponent as DesignIllustration } from "../../images/design-illustration-2.svg";
 import CustomersLogoStripImage from "../../images/customers-logo-strip.png";
 
-const Container = tw.div`relative`;
-const TwoColumn = tw.div`flex flex-col lg:flex-row lg:items-center max-w-screen-xl mx-4 md:mx-auto py-16`;
+const Container = tw.div`relative min-h-screen pt-20`;
+const TwoColumn = tw.div`flex flex-col lg:flex-row lg:items-center max-w-screen-xl mx-4 md:mx-auto py-40`;
 const LeftColumn = tw.div`relative md:w-6/12 text-center max-w-lg mx-auto lg:max-w-none lg:text-left`;
 const RightColumn = tw.div`relative md:w-6/12 flex flex-col justify-center`;
 
@@ -66,7 +66,7 @@ export default ({ roundedHeaderButton }) => {
   return (
     <>
       <Header roundedHeaderButton={roundedHeaderButton} />
-      <Container>
+      <Container id="home">
         <TwoColumn>
           <LeftColumn>
             <Heading>

@@ -13,6 +13,7 @@ import { ReactComponent as MenuIcon } from "feather-icons/dist/icons/menu.svg";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 
 const Header = tw.header`
+  fixed top-0 left-0 right-0 z-50 bg-white
   flex justify-between items-center pt-4
   max-w-screen-xl mx-4 md:mx-auto
 `;
@@ -54,10 +55,11 @@ export default ({ logoLink, links, className, collapseBreakpointClass = "lg" }) 
 
   const defaultLinks = [
     <NavLinks key={1}>
-      <StyledHashLink smooth to="/" onClick={toggleNavbar}>Accueil</StyledHashLink>
+      <StyledHashLink smooth to="/#home" onClick={toggleNavbar}>Accueil</StyledHashLink>
       <StyledHashLink smooth to="/#missions" onClick={toggleNavbar}>Missions</StyledHashLink>
       <StyledHashLink smooth to="/#about" onClick={toggleNavbar}>Expertise</StyledHashLink>
       <StyledHashLink smooth to="/#steps" onClick={toggleNavbar}>Process</StyledHashLink>
+      <StyledHashLink smooth to="/#values" onClick={toggleNavbar}>Valeurs</StyledHashLink>
       <StyledHashLink smooth to="/#returns" onClick={toggleNavbar}>Témoignages</StyledHashLink>
       <StyledHashLink smooth to="/contact" onClick={toggleNavbar}>Contact</StyledHashLink>
     </NavLinks>,

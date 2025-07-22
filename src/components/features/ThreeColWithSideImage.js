@@ -14,7 +14,7 @@ import { ReactComponent as FastIcon } from "images/fast-icon.svg";
 import { ReactComponent as ReliableIcon } from "images/reliable-icon.svg";
 import { ReactComponent as SimpleIcon } from "images/simple-icon.svg";
 
-const Container = tw.div`relative`;
+const Container = tw.div`relative min-h-screen pt-20`;
 
 const ThreeColumnContainer = styled.div`
   ${tw`flex flex-col items-center md:items-stretch md:flex-row flex-wrap md:justify-center max-w-screen-lg mx-4 md:mx-auto py-4`}
