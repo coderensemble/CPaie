@@ -6,14 +6,15 @@ import SaaSProductLandingPage from "landingPage/SaaSProductLandingPage.js";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LegalNotices from "pages/LegalNotices";
 import PrivacyPolicyPage from "pages/RGPDPolicy";
-import ContactUsPage from 'pages/ContactUs.js';
-
+import ContactUsPage from "pages/ContactUs.js";
+import ScrollToTop from "helpers/ScrollToTop";
 
 export default function App() {
   return (
     <>
       <GlobalStyles />
       <Router>
+        <ScrollToTop />
         <Routes>
           <Route path="/contact" element={<ContactUsPage />} />
           <Route path="/legalnotices" element={<LegalNotices />} />
