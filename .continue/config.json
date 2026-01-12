@@ -1,0 +1,10 @@
+{
+  "models": [
+    {
+      "title": "GPT-4",
+      "provider": "openai",
+      "model": "gpt-4.1-mini",
+      "apiKey": "sk-xxxxxxxxxxxx"
+    }
+  ]
+}
