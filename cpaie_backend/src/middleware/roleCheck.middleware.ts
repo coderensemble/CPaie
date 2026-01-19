@@ -7,7 +7,6 @@ export const requireRole = (...allowedRoles: UserRole[]) => {
       res.status(401).json({ error: 'Unauthorized' });
       return;
     }
-
     if (!allowedRoles.includes(req.user.role)) {
       res.status(403).json({
         error: 'Forbidden',
@@ -20,5 +19,5 @@ export const requireRole = (...allowedRoles: UserRole[]) => {
   };
 };
 
-export const requireAdmin = requireRole('admin');
-export const requireClient = requireRole('client', 'admin');
+export const requireAdmin = requireRole('Admin');
+export const requireClient = requireRole('Client', 'Admin');

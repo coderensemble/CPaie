@@ -16,7 +16,6 @@ pool.on('error', (err: Error) => {
 });
 
 pool.on('connect', () => {
-  console.log('✅ Database connected');
 });
 
 export default pool;

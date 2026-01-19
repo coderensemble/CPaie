@@ -1,40 +1,48 @@
-import { Request, Response, NextFunction } from 'express';
-import { auth0Service } from '../services/auth0.service.js';
-import { dbService } from '../services/database.service.js';
-import { UserRole } from '../types/auth.types.js';
+import { Response, NextFunction } from "express";
+import { AuthRequest, UserRole } from "../types/auth.types.js";
+import { auth0Service } from "../services/auth0.service.js";
+import { dbService } from "../services/database.service.js";
 
 export const syncOrCreateUser = async (
-  req: Request,
+  req: AuthRequest,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
   try {
-    if (!req.auth?.sub) {
-      res.status(401).json({ error: 'Unauthorized: No auth payload' });
+    const authPayload = req.auth?.payload;
+
+    console.log("Auth payload:", authPayload);
+
+    if (!authPayload?.sub) {
+      res.status(401).json({ error: "Unauthorized" });
       return;
     }
 
-    const auth0Id = req.auth.sub;
-
-    // Récupérer les infos depuis Auth0
+    const auth0Id = authPayload.sub;
     const auth0User = await auth0Service.getUserInfo(auth0Id);
-    const role: UserRole = auth0User.app_metadata?.role || 
-                          (auth0User.user_metadata?.role as UserRole) || 
-                          'client';
 
-    // Créer ou mettre à jour l'utilisateur
+    let role: UserRole = "Client";
+
+    if (auth0User.app_metadata?.role) {
+      role = auth0User.app_metadata.role as UserRole;
+    } else if (authPayload["https://api.yourapp.com/roles"]?.includes("Admin")) {
+      role = "Admin";
+    }
+
     const dbUser = await dbService.createOrUpdateUser(
       auth0Id,
       auth0User.email,
-      auth0User.name || null,
+      auth0User.name || auth0User.nickname || null,
       role,
       auth0User.user_metadata || {}
     );
 
+    console.log("User synced:", dbUser);
+
     req.user = dbUser;
     next();
   } catch (error) {
-    console.error('Error syncing user:', error);
-    res.status(500).json({ error: 'Failed to sync user' });
+    console.error("syncOrCreateUser error:", error);
+    res.status(500).json({ error: "Failed to sync user" });
   }
 };

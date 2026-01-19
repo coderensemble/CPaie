@@ -26,6 +26,28 @@ CREATE TABLE contacts (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE payments (
+  id SERIAL PRIMARY KEY,
+  user_id UUID REFERENCES users(id),
+  stripe_payment_id TEXT NOT NULL,
+  amount INT NOT NULL, -- en centimes
+  currency TEXT DEFAULT 'eur',
+  status TEXT NOT NULL, -- 'succeeded', 'pending', 'failed'
+  credits INT DEFAULT 0, -- nombre de crédits IA si modèle crédits
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE subscriptions (
+  id SERIAL PRIMARY KEY,
+  user_id UUID REFERENCES users(id),
+  stripe_subscription_id TEXT NOT NULL,
+  status TEXT NOT NULL, -- 'active', 'canceled', 'past_due'
+  plan TEXT NOT NULL,   -- ex : 'ia_monthly', 'ia_weekly'
+  start_date TIMESTAMP DEFAULT NOW(),
+  end_date TIMESTAMP
+);
+
+
 -- Index pour performances
 CREATE INDEX idx_contacts_user_id ON contacts(user_id);
 CREATE INDEX idx_contacts_status ON contacts(status);

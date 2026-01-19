@@ -1,6 +1,17 @@
+// src/services/auth0.service.ts
 import axios, { AxiosInstance } from 'axios';
 import { auth0Config } from '../config/auth0.js';
-import { Auth0User } from '../types/auth.types.js';
+
+// 🔹 Typage pour la réponse d'Auth0 Management API
+export interface Auth0User {
+  user_id: string;
+  email: string;
+  name?: string;
+  nickname?: string;
+  picture?: string;
+  app_metadata?: Record<string, any>;
+  user_metadata?: Record<string, any>;
+}
 
 class Auth0Service {
   private managementToken: string | null = null;
@@ -15,7 +26,7 @@ class Auth0Service {
 
   private async getManagementToken(): Promise<string> {
     const now = Date.now();
-    
+
     if (this.managementToken && this.tokenExpiry > now) {
       return this.managementToken;
     }
@@ -27,12 +38,24 @@ class Auth0Service {
       grant_type: 'client_credentials',
     });
 
-    this.managementToken = response.data.access_token;
-    this.tokenExpiry = now + (response.data.expires_in - 60) * 1000;
+    // ✅ Vérification stricte pour TS
+    const token = response.data.access_token;
+    if (!token) {
+      throw new Error('Failed to get Auth0 management token');
+    }
+
+    this.managementToken = token;
+    this.tokenExpiry = now + (response.data.expires_in - 60) * 1000; // 60s de marge
+
+    // ✅ Vérification stricte pour TS
+    if (!this.managementToken) {
+      throw new Error('Failed to get Auth0 management token');
+    }
 
     return this.managementToken;
   }
 
+  // Récupère les infos d'un utilisateur depuis Auth0
   async getUserInfo(auth0Id: string): Promise<Auth0User> {
     const token = await this.getManagementToken();
 
@@ -46,6 +69,7 @@ class Auth0Service {
     return response.data;
   }
 
+  // Met à jour les metadata utilisateur
   async updateUserMetadata(
     auth0Id: string,
     metadata: Record<string, unknown>

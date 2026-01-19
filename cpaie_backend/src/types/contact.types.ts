@@ -8,8 +8,8 @@ export interface Contact {
   phone: string | null;
   message: string;
   status: ContactStatus;
-  created_at: Date;
-  updated_at: Date;
+  created_at: string;
+  updated_at: string;
   user_email?: string;
   user_name?: string;
 }

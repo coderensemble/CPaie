@@ -1,32 +1,23 @@
 import { Request, Response } from 'express';
 import { dbService } from '../services/database.service.js';
 
-export const getAllContacts = async (req: Request, res: Response): Promise<void> => {
+export const getAllUsers = async (req: Request, res: Response) => {
   try {
-    const { page = '1', limit = '20', status, search } = req.query;
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 20;
 
-    const { contacts, total } = await dbService.getAllContacts(
-      parseInt(page as string),
-      parseInt(limit as string),
-      status as string,
-      search as string
-    );
+    const data = await dbService.getAllUsers(page, limit);
 
     res.json({
       success: true,
-      data: { contacts },
-      pagination: {
-        page: parseInt(page as string),
-        limit: parseInt(limit as string),
-        total,
-        pages: Math.ceil(total / parseInt(limit as string)),
-      },
+      data,
     });
   } catch (error) {
-    console.error('Error fetching all contacts:', error);
-    res.status(500).json({ error: 'Failed to fetch contacts' });
+    console.error("Error fetching users:", error);
+    res.status(500).json({ error: "Failed to fetch users" });
   }
 };
+
 
 export const updateContact = async (req: Request, res: Response): Promise<void> => {
   try {

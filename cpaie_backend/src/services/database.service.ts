@@ -1,7 +1,7 @@
-import { pool } from '../config/database.js';
-import { DBUser, UserRole } from '../types/auth.types.js';
-import { Contact, CreateContactDTO, UpdateContactDTO, ContactStats } from '../types/contact.types.js';
-import { QueryResult } from 'pg';
+import { pool } from "../config/database.js";
+import { DBUser, UserRole } from "../types/auth.types.js";
+import { Contact, CreateContactDTO, UpdateContactDTO, ContactStats } from "../types/contact.types.js";
+import { QueryResult } from "pg";
 
 export class DatabaseService {
   // Users
@@ -30,10 +30,7 @@ export class DatabaseService {
   }
 
   async getUserByAuth0Id(auth0Id: string): Promise<DBUser | null> {
-    const result: QueryResult<DBUser> = await pool.query(
-      'SELECT * FROM users WHERE auth0_id = $1',
-      [auth0Id]
-    );
+    const result: QueryResult<DBUser> = await pool.query("SELECT * FROM users WHERE auth0_id = $1", [auth0Id]);
 
     return result.rows[0] || null;
   }
@@ -44,7 +41,7 @@ export class DatabaseService {
       `INSERT INTO contacts (user_id, name, email, phone, message, status)
        VALUES ($1, $2, $3, $4, $5, $6)
        RETURNING *`,
-      [userId || null, data.name, data.email, data.phone || null, data.message, 'new']
+      [userId || null, data.name, data.email, data.phone || null, data.message, "new"]
     );
 
     return result.rows[0];
@@ -61,50 +58,85 @@ export class DatabaseService {
     return result.rows;
   }
 
-  async getAllContacts(
-    page: number = 1,
-    limit: number = 20,
-    status?: string,
-    search?: string
-  ): Promise<{ contacts: Contact[]; total: number }> {
-    const offset = (page - 1) * limit;
-    const params: (string | number)[] = [];
-    let query = `
-      SELECT c.*, u.email as user_email, u.name as user_name
-      FROM contacts c
-      LEFT JOIN users u ON c.user_id = u.id
-      WHERE 1=1
-    `;
+ // Users (Admin)
+async getAllUsers(
+  page: number = 1,
+  limit: number = 20,
+  role?: UserRole,
+  search?: string
+): Promise<{ users: DBUser[]; total: number }> {
+  const offset = (page - 1) * limit;
+  const params: (string | number)[] = [];
 
-    if (status) {
-      params.push(status);
-      query += ` AND c.status = $${params.length}`;
-    }
-
-    if (search) {
-      params.push(`%${search}%`);
-      query += ` AND (c.name ILIKE $${params.length} OR c.email ILIKE $${params.length} OR c.message ILIKE $${params.length})`;
-    }
-
-    query += ` ORDER BY c.created_at DESC LIMIT $${params.length + 1} OFFSET $${params.length + 2}`;
-    params.push(limit, offset);
-
-    const result: QueryResult<Contact> = await pool.query(query, params);
-
-    const countQuery = `SELECT COUNT(*) FROM contacts WHERE 1=1${status ? ' AND status = $1' : ''}`;
-    const countResult = await pool.query(countQuery, status ? [status] : []);
-
-    return {
-      contacts: result.rows,
-      total: parseInt(countResult.rows[0].count),
-    };
+  let query = `
+    SELECT id, auth0_id, email, name, role, metadata, created_at
+    FROM users
+    WHERE 1=1
+  `;
+console.log("users query", query);
+  // Filtre par rôle
+  if (role) {
+    params.push(role);
+    query += ` AND role = $${params.length}`;
   }
 
+  // Recherche email / name
+  if (search) {
+    params.push(`%${search}%`);
+    query += `
+      AND (
+        email ILIKE $${params.length}
+        OR name ILIKE $${params.length}
+      )
+    `;
+  }
+
+  // Pagination
+  query += `
+    ORDER BY created_at DESC
+    LIMIT $${params.length + 1}
+    OFFSET $${params.length + 2}
+  `;
+  params.push(limit, offset);
+
+  const result = await pool.query<DBUser>(query, params);
+console.log('SQL query executed:', query);
+console.log('Params:', params);
+console.log('Users fetched:', result.rows);
+  /* ---------- COUNT ---------- */
+  const countParams: (string | number)[] = [];
+  let countQuery = `SELECT COUNT(*) FROM users WHERE 1=1`;
+
+  if (role) {
+    countParams.push(role);
+    countQuery += ` AND role = $${countParams.length}`;
+  }
+
+  if (search) {
+    countParams.push(`%${search}%`);
+    countQuery += `
+      AND (
+        email ILIKE $${countParams.length}
+        OR name ILIKE $${countParams.length}
+      )
+    `;
+  }
+
+  const countResult = await pool.query(countQuery, countParams);
+console.log('Count query:', countQuery);
+console.log('Count params:', countParams);
+console.log('Total users:', countResult.rows[0].count);
+
+
+  return {
+    users: result.rows,
+    total: Number(countResult.rows[0].count),
+  };
+}
+
+
   async getContactById(id: string): Promise<Contact | null> {
-    const result: QueryResult<Contact> = await pool.query(
-      'SELECT * FROM contacts WHERE id = $1',
-      [id]
-    );
+    const result: QueryResult<Contact> = await pool.query("SELECT * FROM contacts WHERE id = $1", [id]);
 
     return result.rows[0] || null;
   }
@@ -142,7 +174,7 @@ export class DatabaseService {
     values.push(id);
     const query = `
       UPDATE contacts 
-      SET ${fields.join(', ')}, updated_at = CURRENT_TIMESTAMP
+      SET ${fields.join(", ")}, updated_at = CURRENT_TIMESTAMP
       WHERE id = $${index}
       RETURNING *
     `;
@@ -152,7 +184,7 @@ export class DatabaseService {
   }
 
   async deleteContact(id: string): Promise<boolean> {
-    const result = await pool.query('DELETE FROM contacts WHERE id = $1 RETURNING id', [id]);
+    const result = await pool.query("DELETE FROM contacts WHERE id = $1 RETURNING id", [id]);
     return result.rowCount !== null && result.rowCount > 0;
   }
 
