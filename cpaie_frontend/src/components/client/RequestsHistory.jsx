@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useApi } from '../../hooks/useApi';
+import { useApi } from '../../hooks/useApi.ts';
 
 const STATUS_LABELS = {
   new: { label: 'Nouveau', className: 'bg-blue-100 text-blue-800' },

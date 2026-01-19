@@ -13,8 +13,8 @@ root.render(
       domain={auth0Config.domain}
       clientId={auth0Config.clientId}
       authorizationParams={auth0Config.authorizationParams}
-      cacheLocation={auth0Config.cacheLocation}
-      useRefreshTokens={auth0Config.useRefreshTokens}
+      cacheLocation="localstorage"
+      useRefreshTokens={true}
     >
       <App />
     </Auth0Provider>

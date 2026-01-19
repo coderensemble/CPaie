@@ -10,7 +10,7 @@ export interface User {
   'https://api.yourapp.com/email': string;
 }
 
-export type UserRole = 'admin' | 'client';
+export type UserRole = 'Admin' | 'Client';
 
 export interface AuthContextType {
   user: User | null;

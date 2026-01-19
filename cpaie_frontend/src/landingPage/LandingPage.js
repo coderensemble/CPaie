@@ -6,6 +6,8 @@ import MainFeature from "../components/features/Expertise.js";
 import MainFeature2 from "../components/features/Value.js";
 import FeatureWithSteps from "../components/features/Steps.js";
 import Testimonial from "../components/testimonials/Testimonials.js";
+import François from "../images/Francois bernhard.jpeg";
+import Sybille from "../images/sybille du peloux.jpeg";
 import Footer from "../components/footers/MiniCenteredFooter.js";
 import heroScreenshotImageSrc from "../images/carole.jpeg";
 import macHeroScreenshotImageSrc from "../images/team-illustration.svg";
@@ -108,7 +110,7 @@ export default () => {
           testimonials={[
             {
               profileImageSrc:
-                "https://media.licdn.com/dms/image/v2/D4D03AQHXj--NI7bN9g/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1708356619287?e=1757548800&v=beta&t=i4sXV-R1yh3t8szbE8ppn1n56uoZuAp2W9RRJ0FJ0iA",
+                Sybille,
               heading: "LE PACK",
               quote:
                 "Grâce à Carole, nous avons enfin trouvé la relation de proximité qui nous manquait avec notre précédent expert paie. Compétente, disponible et réactive, nous avons l'impression qu'elle fait partie intégrante de la société.",
@@ -117,7 +119,7 @@ export default () => {
             },
             {
               profileImageSrc:
-                "https://media.licdn.com/dms/image/v2/C4E03AQHaAqbESyJutQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1517536162119?e=1757548800&v=beta&t=wCSfckl_vz7xs0vbJ9wPnoSQUz1j74SZOmnB087cT-M",
+                François,
               heading: "VERTYCAL",
               quote:
                 "Responsable paie à temps partagé Carole est trés appréciée de ses équipes par sa disponibilité et sa capacité à les faire progresser. Elle est force de proposition et de conseils. Elle permet à Vertycal de réaliser des missions à forte valeur ajoutée (audits, mise en place du CSE...).",

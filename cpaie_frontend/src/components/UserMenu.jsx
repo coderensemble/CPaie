@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { useAuthContext } from '../context/AuthContext';
 import { LoginButton } from '../components/auth/LoginButton';
 
 export default function UserMenu() {
-  const { isAuthenticated, logout } = useAuth0();
-  const { isAdmin, user } = useAuthContext();
+  const { user, isAuthenticated, logout } = useAuth0();
   const [isOpen, setIsOpen] = useState(false);
+
+    // Définir si l'utilisateur est admin selon un claim ou app_metadata
+const isAdmin = user?.['https://api.yourapp.com/roles']?.[0] === 'Admin';
 
   const handleLogout = () => {
     logout({
@@ -18,7 +19,7 @@ export default function UserMenu() {
 
   if (!isAuthenticated) {
     return (
-      <LoginButton className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700" />
+      <LoginButton className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700" />
     );
   }
 
@@ -28,7 +29,7 @@ export default function UserMenu() {
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-2 bg-white border border-gray-300 rounded-lg px-4 py-2 hover:bg-gray-50"
       >
-        <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">
+        <div className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center text-white font-bold">
           {user?.name?.[0] || user?.email?.[0] || 'U'}
         </div>
         <span className="text-sm font-medium">
@@ -57,8 +58,8 @@ export default function UserMenu() {
             <p className="text-sm font-semibold text-gray-900">
               {user?.name || 'Utilisateur'}
             </p>
-            <p className="text-xs text-gray-500">{user?.email}</p>
-            <p className="text-xs text-blue-600 mt-1">
+            <p className="text-xs text-gray-500">{user?.email===user?.name ? null : user?.email}</p>
+            <p className="text-xs text-red-600 mt-1">
               {isAdmin ? '👑 Administrateur' : '👤 Client'}
             </p>
           </div>
@@ -72,7 +73,7 @@ export default function UserMenu() {
 
           <button
             onClick={handleLogout}
-            className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+            className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-red-50"
           >
             🚪 Déconnexion
           </button>
