@@ -9,9 +9,12 @@
       }
     },
     {
-      "src": "cpaie_backend/dist/app.js",
-      "use": "@vercel/node"
-    }
+  "src": "cpaie_backend/package.json",
+  "use": "@vercel/node",
+  "config": {
+    "includeFiles": ["src/**", "package.json", "tsconfig.json"]
+  }
+}
   ],
   "routes": [
     {
