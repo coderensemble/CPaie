@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "cpaie_frontend/package.json",
+      "use": "@vercel/next"
+    },
+    {
+      "src": "cpaie_backend/dist/app.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "cpaie_backend/dist/app.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "cpaie_frontend/$1"
+    }
+  ]
+}
