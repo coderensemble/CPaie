@@ -18,6 +18,23 @@ export const getAllUsers = async (req: Request, res: Response) => {
   }
 };
 
+export const getContacts = async (req: Request, res: Response) => {
+  try {
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 20;
+
+    const contacts = await dbService.getAllContacts(page, limit);
+
+    res.json({
+      success: true,
+      data: { contacts },
+    });
+  } catch (error) {
+    console.error("Error fetching contacts:", error);
+    res.status(500).json({ error: "Failed to fetch contacts" });
+  }
+};
+
 
 export const updateContact = async (req: Request, res: Response): Promise<void> => {
   try {

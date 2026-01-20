@@ -3,6 +3,7 @@ import { DBUser, UserRole } from "../types/auth.types.js";
 import { Contact, CreateContactDTO, UpdateContactDTO, ContactStats } from "../types/contact.types.js";
 import { QueryResult } from "pg";
 
+
 export class DatabaseService {
   // Users
   async createOrUpdateUser(
@@ -58,6 +59,23 @@ export class DatabaseService {
     return result.rows;
   }
 
+  async getAllContacts(page = 1, limit = 20) {
+  const offset = (page - 1) * limit;
+
+  const { rows } = await pool.query(
+    `
+    SELECT id, name, email, phone, message, status, created_at
+    FROM contacts
+    ORDER BY created_at DESC
+    LIMIT $1 OFFSET $2
+    `,
+    [limit, offset]
+  );
+
+  return rows;
+}
+
+
  // Users (Admin)
 async getAllUsers(
   page: number = 1,
@@ -73,7 +91,6 @@ async getAllUsers(
     FROM users
     WHERE 1=1
   `;
-console.log("users query", query);
   // Filtre par rôle
   if (role) {
     params.push(role);
@@ -134,6 +151,25 @@ console.log('Total users:', countResult.rows[0].count);
   };
 }
 
+async getUserRequests(userId: string): Promise<Contact[]> {
+  const result = await pool.query(
+    `SELECT * FROM contacts WHERE user_id = $1 ORDER BY created_at DESC`,
+    [userId] // UUID interne
+  );
+  return result.rows;
+}
+
+// Créer une nouvelle demande (devis ou IA)
+async createRequest(data: CreateContactDTO & { user_id: string }): Promise<Contact> {
+  const result: QueryResult<Contact> = await pool.query(
+    `INSERT INTO contacts (user_id, name, email, phone, message, status)
+     VALUES ($1, $2, $3, $4, $5, $6)
+     RETURNING *`,
+    [data.user_id, data.name, data.email, data.phone || null, data.message,"new"]
+  );
+
+  return result.rows[0];
+}
 
   async getContactById(id: string): Promise<Contact | null> {
     const result: QueryResult<Contact> = await pool.query("SELECT * FROM contacts WHERE id = $1", [id]);

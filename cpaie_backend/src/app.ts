@@ -9,9 +9,12 @@ import { pool } from './config/database.js';
 import { env } from './config/environment.js';
 import userRoutes from './routes/user.routes';
 import adminRoutes from './routes/admin.routes';
+import clientRoutes from './routes/client.routes';
 import authRoutes from './routes/auth.routes';
 import aiRoutes from './routes/ai.routes';
 import { errorHandler } from './middleware/errorHandler.middleware.js';
+import { AuthRequest } from '../src/types/auth.types.js';
+
 
 
 
@@ -49,7 +52,7 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 /* ======================
    Health check
 ====================== */
-app.get('/health', (_req: Request, res: Response) => {
+app.get('/health', (_req: AuthRequest, res: Response) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
@@ -58,6 +61,7 @@ app.get('/health', (_req: Request, res: Response) => {
 ====================== */
 app.use('/api/users', userRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/client', clientRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/ai', aiRoutes);
 

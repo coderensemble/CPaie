@@ -19,6 +19,7 @@ export interface CreateContactDTO {
   email: string;
   phone?: string;
   message: string;
+  status: string;
 }
 
 export interface UpdateContactDTO {

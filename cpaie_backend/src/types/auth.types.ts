@@ -13,10 +13,13 @@ export type UserRole = 'Client' | 'Admin';
 
 export interface DBUser {
   id: string;
+  auth0_id: string;  // <-- ajouter cette ligne
   email: string;
-  name?: string | null;
+  name: string | null;
   role: UserRole;
-  metadata?: Record<string, any>;
+  metadata: Record<string, unknown>;
+  created_at: Date;
+  updated_at: Date;
 }
 
 // AuthRequest : on laisse req.auth comme `any` pour éviter conflit VerifyJwtResult
@@ -26,7 +29,7 @@ export interface AuthRequest extends Express.Request {
 }
 
 export interface Auth0User {
-  user_id: string; // ou sub
+  user_id: string;
   email: string;
   name?: string;
   nickname?: string;

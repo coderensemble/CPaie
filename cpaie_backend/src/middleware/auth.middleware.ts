@@ -11,7 +11,7 @@ export const syncOrCreateUser = async (
   try {
     const authPayload = req.auth?.payload;
 
-    console.log("Auth payload:", authPayload);
+    //console.log("Auth payload:", authPayload);
 
     if (!authPayload?.sub) {
       res.status(401).json({ error: "Unauthorized" });
