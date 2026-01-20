@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { dbService } from '../services/database.service.js';
 import { AuthRequest, } from '../types/auth.types.js';
 import { CreateContactDTO } from '../types/contact.types.js';
+import { CreateDevisBody } from '../types/contact.types.js';
 
 
 export const getMyRequests = async (req: AuthRequest, res: Response) => {
@@ -28,7 +29,8 @@ export const getMyRequests = async (req: AuthRequest, res: Response) => {
 
 
 
-export const createDevisRequest = async (req: AuthRequest, res: Response) => {
+export const createDevisRequest = async (req: AuthRequest<CreateDevisBody>, res: Response) => {
+  if (!req.user?.id) return res.status(401).json({ error: 'Utilisateur non authentifié' });
   try {
     // Vérifie que userId existe
     if (!req.user?.id) {

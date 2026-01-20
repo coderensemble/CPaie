@@ -1,3 +1,5 @@
+import { Request } from 'express';
+
 // src/types/auth.types.ts
 export interface JWTPayload {
   sub: string;
@@ -23,9 +25,10 @@ export interface DBUser {
 }
 
 // AuthRequest : on laisse req.auth comme `any` pour éviter conflit VerifyJwtResult
-export interface AuthRequest extends Express.Request {
-  auth?: any; // ✅ simplifie le conflit avec express-oauth2-jwt-bearer
+
+export interface AuthRequest<Body = any> extends Request<any, any, Body> {
   user?: DBUser;
+  auth?: any;
 }
 
 export interface Auth0User {

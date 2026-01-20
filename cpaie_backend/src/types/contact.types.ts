@@ -1,5 +1,6 @@
 export type ContactStatus = 'new' | 'in_progress' | 'resolved' | 'closed';
 
+
 export interface Contact {
   id: string;
   user_id: string | null;
@@ -36,4 +37,11 @@ export interface ContactStats {
   in_progress: number;
   resolved: number;
   this_week: number;
+}
+
+export interface CreateDevisBody {
+  company_name: string;
+  email: string;
+  telephone?: string;
+  message: string;
 }
