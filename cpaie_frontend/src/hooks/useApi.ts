@@ -2,7 +2,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 import { useCallback } from "react";
 
-const API_URL = "/api";
+const API_URL = process.env.REACT_APP_API_URL || "/api";
 
 export const useApi = () => {
   const { getAccessTokenSilently, isAuthenticated } = useAuth0();
