@@ -10,6 +10,7 @@ import ContactUsPage from "./pages/ContactUs";
 import ScrollToTop from "./helpers/ScrollToTop";
 import ClientDashboard from "./pages/clientDashboard/ClientDashboard";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import { LoginButton } from "./components/auth/LoginButton";
 
 export default function App() {
   return (
@@ -23,6 +24,8 @@ export default function App() {
           <Route path="/contact" element={<ContactUsPage />} />
           <Route path="/legalnotices" element={<LegalNotices />} />
           <Route path="/policy" element={<PrivacyPolicyPage />} />
+          <Route path="/callback" element={<LoginButton />} />
+
 
           {/* Routes protégées - Client */}
           <Route
