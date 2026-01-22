@@ -24,6 +24,12 @@ const app = express();
    Security
 ====================== */
 app.use(helmet());
+
+app.options('*', cors({
+  origin: [env.FRONTEND_URL, env.ADMIN_URL],
+  credentials: true,
+}));
+
 app.use(
   cors({
     origin: [env.FRONTEND_URL, env.ADMIN_URL],
@@ -41,7 +47,10 @@ const limiter: RateLimitRequestHandler = rateLimit({
   max: 100,
   message: 'Too many requests',
 });
-app.use('/api', limiter);
+app.use('/api', (req, res, next) => {
+  if (req.method === 'OPTIONS') return res.sendStatus(200);
+  return limiter(req, res, next);
+});
 
 /* ======================
    Body parser
