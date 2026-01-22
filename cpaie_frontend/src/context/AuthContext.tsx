@@ -28,10 +28,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   useEffect(() => {
     const syncUser = async () => {
       try {
-        const token = await getAccessTokenSilently();
-        const res = await apiCall("/auth/me", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+  const res = await apiCall("/auth/me");
         setUser(res);
       } catch (err) {
         console.error("❌ User sync failed", err);
