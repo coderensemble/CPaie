@@ -2,6 +2,7 @@
   "name": "cpaie",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "@auth0/auth0-react": "^2.11.0",
     "@emailjs/browser": "^4.1.0",

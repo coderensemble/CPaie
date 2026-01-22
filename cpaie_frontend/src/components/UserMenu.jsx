@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { LoginButton } from '../components/auth/LoginButton';
+import { Link } from 'react-router-dom';
+
 
 export default function UserMenu() {
   const { user, isAuthenticated, logout } = useAuth0();
@@ -64,12 +66,12 @@ const isAdmin = user?.['https://api.yourapp.com/roles']?.[0] === 'Admin';
             </p>
           </div>
 
-          <a
-            href={isAdmin ? '/admin' : '/dashboard'}
+          <Link
+            to={isAdmin ? '/admin' : '/dashboard'}
             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
           >
             📊 Mon espace
-          </a>
+          </Link>
 
           <button
             onClick={handleLogout}

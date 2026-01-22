@@ -25,6 +25,7 @@
       "src": "/api/(.*)",
       "dest": "cpaie_backend/dist/app.js"
     },
+    { "handle": "filesystem" },
     {
       "src": "/(.*)",
       "dest": "cpaie_frontend/build/index.html"
