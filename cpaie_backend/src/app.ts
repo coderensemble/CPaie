@@ -27,15 +27,19 @@ app.use(helmet());
 
 app.use(
   cors({
-    origin: [env.FRONTEND_URL, env.ADMIN_URL],
+    origin: function (origin, callback) {
+      const allowedOrigins = [env.FRONTEND_URL, env.ADMIN_URL];
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
   })
 );
 
-app.options('*', cors({
-  origin: [env.FRONTEND_URL, env.ADMIN_URL],
-  credentials: true,
-}));
+app.options('*', cors());
 
 app.use(compression() as unknown as express.RequestHandler);
 
