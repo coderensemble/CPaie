@@ -15,7 +15,11 @@ import aiRoutes from './routes/ai.routes';
 import { errorHandler } from './middleware/errorHandler.middleware.js';
 import { AuthRequest } from '../src/types/auth.types.js';
 
-
+const allowedOrigins = [
+  'http://localhost:3000',      // ton frontend local
+  'https://cpluspaie.vercel.app', // prod
+  'https://admin.cpluspaie.vercel.app', // prod admin
+];
 
 
 const app = express();
@@ -28,14 +32,17 @@ app.use(helmet());
 app.use(
   cors({
     origin: function (origin, callback) {
-      const allowedOrigins = [env.FRONTEND_URL, env.ADMIN_URL];
-      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      // Si aucune origine (ex : Postman) ou origine autorisée
+      if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        callback(new Error('Not allowed by CORS'));
+        console.warn('CORS blocked:', origin);
+        callback(new Error(`Not allowed by CORS: ${origin}`));
       }
     },
     credentials: true,
+    methods: ['GET','POST','OPTIONS','PUT','DELETE'],
+    allowedHeaders: ['Authorization','Content-Type'],
   })
 );
 
