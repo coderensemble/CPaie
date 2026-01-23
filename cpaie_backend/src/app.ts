@@ -52,6 +52,8 @@ const limiter: RateLimitRequestHandler = rateLimit({
   message: 'Too many requests',
 });
 app.use('/api', (req, res, next) => {
+    console.log('Origin:', req.headers.origin);
+
   if (req.method === 'OPTIONS') return res.sendStatus(200);
   return limiter(req, res, next);
 });
