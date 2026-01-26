@@ -30,22 +30,21 @@ app.use(helmet());
 
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // Si aucune origine (ex : Postman) ou origine autorisée
+    origin: (origin, callback) => {
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        console.warn('CORS blocked:', origin);
-        callback(new Error(`Not allowed by CORS: ${origin}`));
+        console.warn("❌ CORS blocked:", origin);
+        callback(new Error("Not allowed by CORS"));
       }
     },
     credentials: true,
-    methods: ['GET','POST','OPTIONS','PUT','DELETE', 'OPTIONS'],
-    allowedHeaders: ['Authorization','Content-Type'],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Authorization", "Content-Type"],
   })
 );
 
-app.options("*", cors({ origin: allowedOrigins, credentials: true }));
+app.options("*", cors());
 
 app.use(compression() as unknown as express.RequestHandler);
 

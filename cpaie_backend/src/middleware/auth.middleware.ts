@@ -43,6 +43,7 @@ export const syncOrCreateUser = async (
     next();
   } catch (error) {
     console.error("syncOrCreateUser error:", error);
+    res.setHeader("Access-Control-Allow-Origin", allowedOrigins[0]); // s'assure que le front voit le header même sur 500
     res.status(500).json({ error: "Failed to sync user" });
   }
 };
