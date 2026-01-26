@@ -27,6 +27,16 @@ export const getMyRequests = async (req: AuthRequest, res: Response) => {
   }
 };
 
+export const getStats = async (_req: AuthRequest, res: Response) => {
+  try {
+    const stats = await dbService.getContactStats();
+    return res.json({ success: true, data: { stats } });
+  } catch (error) {
+    console.error('Error fetching stats:', error);
+    return res.status(500).json({ error: 'Failed to fetch stats' });
+  }
+}
+
 
 
 export const createDevisRequest = async (req: AuthRequest<CreateDevisBody>, res: Response) => {
