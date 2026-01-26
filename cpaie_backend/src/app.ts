@@ -1,26 +1,26 @@
-import express, { Request, Response } from 'express';
-import helmet from 'helmet';
-import cors from 'cors';
-import compression from 'compression';
-import rateLimit, { RateLimitRequestHandler } from 'express-rate-limit';
-import OpenAI from 'openai';
-import { connectMongo } from './config/mongodb.js';
-import { pool } from './config/database.js';
-import { env } from './config/environment.js';
-import userRoutes from './routes/user.routes';
-import adminRoutes from './routes/admin.routes';
-import clientRoutes from './routes/client.routes';
-import authRoutes from './routes/auth.routes';
-import aiRoutes from './routes/ai.routes';
-import { errorHandler } from './middleware/errorHandler.middleware.js';
-import { AuthRequest } from '../src/types/auth.types.js';
+import express, { Request, Response } from "express";
+import helmet from "helmet";
+import cors from "cors";
+import compression from "compression";
+import rateLimit, { RateLimitRequestHandler } from "express-rate-limit";
+import OpenAI from "openai";
+import { connectMongo } from "./config/mongodb.js";
+import { pool } from "./config/database.js";
+import { env } from "./config/environment.js";
+import userRoutes from "./routes/user.routes";
+import adminRoutes from "./routes/admin.routes";
+import clientRoutes from "./routes/client.routes";
+import authRoutes from "./routes/auth.routes";
+import aiRoutes from "./routes/ai.routes";
+import { errorHandler } from "./middleware/errorHandler.middleware.js";
+import { AuthRequest } from "../src/types/auth.types.js";
 
 const allowedOrigins = [
-  'http://localhost:3000',      // ton frontend local
-  'https://cpluspaie.vercel.app', // prod
-  'https://admin.cpluspaie.vercel.app', // prod admin
+  "http://localhost:3000",
+  "http://localhost:5173",
+  "https://cpluspaie.vercel.app",
+  "https://admin.cpluspaie.vercel.app",
 ];
-
 
 const app = express();
 
@@ -31,22 +31,24 @@ app.use(helmet());
 
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // Si aucune origine (ex : Postman) ou origine autorisée
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        console.warn('CORS blocked:', origin);
-        callback(new Error(`Not allowed by CORS: ${origin}`));
+    origin(origin, callback) {
+      // appels internes, Postman, healthcheck
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
       }
+
+      console.warn("CORS blocked:", origin);
+      return callback(null, false);
     },
     credentials: true,
-    methods: ['GET','POST','OPTIONS','PUT','DELETE'],
-    allowedHeaders: ['Authorization','Content-Type'],
-  })
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Authorization", "Content-Type"],
+  }),
 );
 
-app.options('*', cors());
+app.options("*", cors());
 
 app.use(compression() as unknown as express.RequestHandler);
 
@@ -56,46 +58,43 @@ app.use(compression() as unknown as express.RequestHandler);
 const limiter: RateLimitRequestHandler = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
-  message: 'Too many requests',
+  message: "Too many requests",
 });
-app.use('/api', (req, res, next) => {
-    console.log('Origin:', req.headers.origin);
 
-  if (req.method === 'OPTIONS') return res.sendStatus(200);
-  return limiter(req, res, next);
-});
+// ⚡ Appliquer le limiter sur toutes les routes /api directement
+app.use("/api", limiter);
+
 
 /* ======================
    Body parser
 ====================== */
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
 /* ======================
    Health check
 ====================== */
-app.get('/health', (_req: AuthRequest, res: Response) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+app.get("/health", (_req: AuthRequest, res: Response) => {
+  res.json({ status: "ok", timestamp: new Date().toISOString() });
 });
 
 /* ======================
    Routes existantes
 ====================== */
-app.use('/api/users', userRoutes);
-app.use('/api/admin', adminRoutes);
-app.use('/api/client', clientRoutes);
-app.use('/api/auth', authRoutes);
-app.use('/api/ai', aiRoutes);
-
+app.use("/api/users", userRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api/client", clientRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/ai", aiRoutes);
 
 /* ======================
    OpenAI IA endpoint
 ====================== */
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-app.post('/api/analyze', async (req: Request, res: Response) => {
+app.post("/api/analyze", async (req: Request, res: Response) => {
   const data = req.body;
-  if (!data) return res.status(400).json({ error: 'No data provided' });
+  if (!data) return res.status(400).json({ error: "No data provided" });
 
   const prompt = `
 Tu es un expert RH et paie.
@@ -103,8 +102,8 @@ Analyse cette situation et propose des recommandations :
 - Convention collective : ${data.ccn}
 - Secteur : ${data.secteur}
 - Effectif : ${data.effectif}
-- Types de contrats : ${data.typeContrats?.join(', ')}
-- Objectifs : ${data.objectifs?.join(', ')}
+- Types de contrats : ${data.typeContrats?.join(", ")}
+- Objectifs : ${data.objectifs?.join(", ")}
 - Problèmes : ${data.problemes}
 - Priorité : ${data.priorite}
 
@@ -113,13 +112,13 @@ Donne une réponse concise et structurée.
 
   try {
     const response = await openai.chat.completions.create({
-      model: 'gpt-4.1-mini',
-      messages: [{ role: 'user', content: prompt }],
+      model: "gpt-4.1-mini",
+      messages: [{ role: "user", content: prompt }],
       temperature: 0.7,
       max_tokens: 500,
     });
 
-    const analysis = response.choices[0].message?.content ?? '';
+    const analysis = response.choices[0].message?.content ?? "";
     return res.json({ analysis });
   } catch (err: any) {
     console.error(err);
@@ -131,7 +130,7 @@ Donne une réponse concise et structurée.
    404 handler
 ====================== */
 app.use((_req: Request, res: Response) => {
-  res.status(404).json({ error: 'Route not found' });
+  res.status(404).json({ error: "Route not found" });
 });
 
 /* ======================
@@ -145,25 +144,24 @@ app.use(errorHandler);
 async function startServer() {
   try {
     // 🔌 Connexion PostgreSQL
-    await pool.query('SELECT 1');
-    console.log('✅ PostgreSQL connected');
+    await pool.query("SELECT 1");
+    console.log("✅ PostgreSQL connected");
 
     // 🔌 Connexion Mongo
     await connectMongo();
-    console.log('✅ MongoDB connected');
+    console.log("✅ MongoDB connected");
 
-    if (process.env.NODE_ENV !== 'production') {
-    app.listen(env.PORT, () => {
-      console.log(`🚀 Server running on port ${env.PORT}`);
-    });
-  }
+    if (process.env.NODE_ENV !== "production") {
+      app.listen(env.PORT, () => {
+        console.log(`🚀 Server running on port ${env.PORT}`);
+      });
+    }
   } catch (error) {
-    console.error('❌ Failed to start server', error);
+    console.error("❌ Failed to start server", error);
     process.exit(1);
   }
 }
 
 startServer();
-
 
 export default app;
