@@ -32,23 +32,23 @@ app.use(helmet());
 app.use(
   cors({
     origin(origin, callback) {
-      // appels internes, Postman, healthcheck
-      if (!origin) return callback(null, true);
-
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      }
-
-      console.warn("CORS blocked:", origin);
-      return callback(null, false);
-    },
+    if (!origin) return callback(null, true); // Ok pour Postman / SSR
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    return callback(null, false);
+  },
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Authorization", "Content-Type"],
   }),
 );
 
-app.options("*", cors());
+// Gérer toutes les requêtes OPTIONS préflight
+app.options("*", cors({
+  origin: allowedOrigins,
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Authorization", "Content-Type"],
+}));
 
 app.use(compression() as unknown as express.RequestHandler);
 
