@@ -1,6 +1,5 @@
 import express, { Request, Response } from "express";
 import helmet from "helmet";
-import cors from "cors";
 import compression from "compression";
 import rateLimit, { RateLimitRequestHandler } from "express-rate-limit";
 import OpenAI from "openai";
@@ -29,26 +28,28 @@ const app = express();
 ====================== */
 app.use(helmet());
 
-app.use(
-  cors({
-    origin(origin, callback) {
-    if (!origin) return callback(null, true); // Ok pour Postman / SSR
-    if (allowedOrigins.includes(origin)) return callback(null, true);
-    return callback(null, false);
-  },
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Authorization", "Content-Type"],
-  }),
-);
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (origin && allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+    res.setHeader(
+      "Access-Control-Allow-Methods",
+      "GET,POST,PUT,PATCH,DELETE,OPTIONS"
+    );
+    res.setHeader(
+      "Access-Control-Allow-Headers",
+      "Authorization, Content-Type"
+    );
+  }
 
-// Gérer toutes les requêtes OPTIONS préflight
-app.options("*", cors({
-  origin: allowedOrigins,
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Authorization", "Content-Type"],
-}));
+  // Préflight OPTIONS
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
+
+  return next();
+});
 
 app.use(compression() as unknown as express.RequestHandler);
 
