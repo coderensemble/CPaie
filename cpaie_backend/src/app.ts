@@ -18,7 +18,6 @@ import { AuthRequest } from '../src/types/auth.types.js';
 const allowedOrigins = [
   'http://localhost:3000',      // ton frontend local
   'https://cpluspaie.vercel.app', // prod
-  'https://admin.cpluspaie.vercel.app', // prod admin
 ];
 
 
@@ -41,12 +40,12 @@ app.use(
       }
     },
     credentials: true,
-    methods: ['GET','POST','OPTIONS','PUT','DELETE'],
+    methods: ['GET','POST','OPTIONS','PUT','DELETE', 'OPTIONS'],
     allowedHeaders: ['Authorization','Content-Type'],
   })
 );
 
-app.options('*', cors());
+app.options("*", cors({ origin: allowedOrigins, credentials: true }));
 
 app.use(compression() as unknown as express.RequestHandler);
 

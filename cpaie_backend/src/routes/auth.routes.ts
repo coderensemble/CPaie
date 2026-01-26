@@ -7,7 +7,7 @@ import cors from 'cors';
 const router = Router();
 
 // OPTIONS preflight pour ce router
-router.options('*', cors());
+router.options("*", cors({ origin: ["https://cpluspaie.vercel.app"], credentials: true }));
 
 const allowedOrigins = [
   'https://cpluspaie.vercel.app',
@@ -23,6 +23,7 @@ const corsOptions = {
 };
 
 router.options('*', cors(corsOptions)); // préflight OPTIONS
+
 router.get('/me', cors(corsOptions), checkJwt, syncOrCreateUser, (req: AuthRequest, res: Response) => {
   res.json(req.user);
 });
