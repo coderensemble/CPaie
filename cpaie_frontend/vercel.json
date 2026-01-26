@@ -8,13 +8,16 @@
     }
   ],
   "routes": [
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/index.html" }
-  ],
-  "rewrites": [
     {
-       "source": "/api/(.*)",
-      "destination": "https://api.cpluspaie.fr/api/$1"
+      "src": "/api/(.*)",
+      "dest": "https://api.cpluspaie.fr/api/$1"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }
