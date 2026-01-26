@@ -6,7 +6,6 @@ import rateLimit, { RateLimitRequestHandler } from 'express-rate-limit';
 import OpenAI from 'openai';
 import { connectMongo } from './config/mongodb.js';
 import { pool } from './config/database.js';
-import { env } from './config/environment.js';
 import userRoutes from './routes/user.routes';
 import adminRoutes from './routes/admin.routes';
 import clientRoutes from './routes/client.routes';
