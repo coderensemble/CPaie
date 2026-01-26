@@ -2,7 +2,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 import { useCallback } from "react";
 
-const API_URL = process.env.REACT_APP_API_URL || "/api";
+const API_URL = "/api";
 
 export const useApi = () => {
   const { getAccessTokenSilently, isAuthenticated } = useAuth0();
@@ -16,18 +16,19 @@ export const useApi = () => {
           token = await getAccessTokenSilently({
             authorizationParams: {
               audience: process.env.REACT_APP_AUTH0_AUDIENCE,
-              scope: "read:contacts write:contacts admin:all", // ✅ UNIQUEMENT API
+              scope: "read:contacts write:contacts admin:all", 
             },
           });
         }
 
-          console.log("Access Token:", token); // 👈 Vérifie si tu as bien un token
+          console.log("Access Token:", token); 
 
 
         const response = await axios({
           method: options.method || "GET",
           url: `${API_URL}${endpoint}`,
           data: options.data,
+          //withCredentials: true,
           headers: {
             ...(token && { Authorization: `Bearer ${token}` }),
             ...(options.headers || {}),

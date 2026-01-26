@@ -49,8 +49,8 @@ export default function AdminDashboard() {
     setLoading(true);
     try {
       const [contactsData, statsData] = await Promise.all([
-        apiCall('/contacts'),
-        apiCall('/stats'),
+        apiCall('/client/contacts'),
+        apiCall('/client/stats'),
       ]);
 
       if (contactsData.data?.contacts) setContacts(contactsData.data.contacts);
